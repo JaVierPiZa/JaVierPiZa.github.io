@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesion</title>
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Fondo con imagen */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        /* Contenedor del login */
+        .login-container {
+            width: 350px;
+            background: rgba(0, 0, 0, 0.6); /* semi-transparente */
+            border-radius: 12px;
+            padding: 40px 30px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        /* Título */
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        /* Campos con íconos */
+        .input-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .input-box i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+        }
+
+        /* Checkbox y links */
+        .options {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .options a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+
+        /* Botón */
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background: #f0f0f0;
+        }
+
+        /* Enlace para registrarse */
+        .register {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .register a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="login-container">
+        <h2>Login</h2>
+
+        <!-- Campo usuario -->
+        <div class="input-box">
+            <input type="text" id="usuario" placeholder="usuario">
+            <i class="fa fa-user"></i>
+        </div>
+
+        <!-- Campo contraseña -->
+        <div class="input-box">
+            <input type="password" id="password" placeholder="contraseña">
+            <i class="fa fa-lock"></i>
+        </div>
+
+        <!-- Opciones -->
+        <div class="options">
+            <label><input type="checkbox"> Recordarme</label>
+            <a href="#">Olvidaste tu contraseña?</a>
+        </div>
+
+        <!-- Botón -->
+        <button onclick="iniciarSesion()">Iniciar</button>
+
+        
+    </div>
+
+    <script>
+        // Redirección al hacer login
+        function iniciarSesion() {
+            const usuario = document.getElementById("usuario").value;
+            const password = document.getElementById("password").value;
+
+            if(usuario && password) {
+                window.location.href = "guardia.html";
+            } else {
+                alert("Por favor, complete todos los campos.");
+            }
+        }
+    </script>
+
+</body>
+</html>
