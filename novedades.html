@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novedades</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+      width: 360px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0d47a1;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      outline: none;
+    }
+
+    textarea {
+      margin-top: 10px;
+      display: none; /* Oculto hasta que se elija "Otro" */
+      resize: none;
+      height: 80px;
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      margin-top: 15px;
+      background: #0d47a1;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #08306b;
+    }
+
+    .btn-secondary {
+      background: #757575;
+    }
+
+    .btn-secondary:hover {
+      background: #424242;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <h1>Novedades</h1>
+
+    <!-- Selección de ubicación -->
+    <label for="ubicacion">Ubicación</label>
+    <select id="ubicacion">
+      <option value="">Seleccione una ubicación</option>
+      <option>Comedor</option>
+      <option>Enlaces</option>
+      <option>Portón Internado</option>
+      <option>Primer Piso</option>
+      <option>Segundo Piso</option>
+      <option>Tercer Piso</option>
+      <option>Hall</option>
+    </select>
+
+    <!-- Selección de novedad -->
+    <label for="novedad">Novedad</label>
+    <select id="novedad">
+      <option value="">Seleccione una novedad</option>
+      <option>Porton sin candado</option>
+      <option>Puerta sin candado</option>
+      <option>Ventana abierta</option>
+      <option>Puerta abierta</option>
+      <option>Luz encendida</option>
+      <option>Sector sin luz</option>
+      <option>Fuga de agua</option>
+      <option value="otro">Otro</option>
+    </select>
+
+    <!-- Campo de texto si elige "otro" -->
+    <textarea id="otroTexto" placeholder="Describa la novedad..."></textarea>
+
+    <!-- Botones -->
+    <button class="btn" onclick="guardarNovedad()">Guardar</button>
+    <a href="guardia.html" class="btn btn-secondary">Volver</a>
+  </div>
+
+  <script>
+    const novedadSelect = document.getElementById("novedad");
+    const otroTexto = document.getElementById("otroTexto");
+
+    // Mostrar/ocultar campo de texto si selecciona "otro"
+    novedadSelect.addEventListener("change", () => {
+      if (novedadSelect.value === "otro") {
+        otroTexto.style.display = "block";
+      } else {
+        otroTexto.style.display = "none";
+      }
+    });
+
+    // Función para simular guardar novedad
+    function guardarNovedad() {
+      const ubicacion = document.getElementById("ubicacion").value;
+      const novedad = novedadSelect.value === "otro" ? otroTexto.value : novedadSelect.value;
+
+      if (!ubicacion || !novedad) {
+        alert("Debe seleccionar ubicación y novedad.");
+        return;
+      }
+
+      alert("📌 Novedad registrada:\n\nUbicación: " + ubicacion + "\nNovedad: " + novedad);
+
+      // Aquí en el futuro se podría enviar la info a un servidor o guardarla en archivo
+    }
+  </script>
+
+</body>
+</html>

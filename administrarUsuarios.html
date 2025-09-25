@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrar Usuarios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 800px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #0d47a1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #0d47a1;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+      font-size: 14px;
+    }
+
+    .btn-edit {
+      background: #ff9800;
+    }
+
+    .btn-edit:hover {
+      background: #e68900;
+    }
+
+    .btn-delete {
+      background: #c62828;
+    }
+
+    .btn-delete:hover {
+      background: #8e0000;
+    }
+
+    .btn-add {
+      background: #0d47a1;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .btn-add:hover {
+      background: #08306b;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .back-btn {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background: #757575;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .back-btn:hover {
+      background: #424242;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <h1>Administrar Usuarios</h1>
+
+    <!-- Tabla de usuarios -->
+    <table id="usuariosTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Los usuarios se insertan aquí dinámicamente -->
+      </tbody>
+    </table>
+
+    <!-- Formulario para agregar usuario -->
+    <form id="userForm">
+      <input type="text" id="username" placeholder="Nombre de usuario" required>
+      <select id="role" required>
+        <option value="">Seleccionar rol</option>
+        <option value="Administrador">Administrador</option>
+        <option value="Guardia">Guardia</option>
+      </select>
+      <button type="submit" class="btn btn-add">Agregar Usuario</button>
+    </form>
+
+    <a href="administrador.html" class="back-btn">Volver</a>
+  </div>
+
+  <script>
+    // Datos iniciales de ejemplo
+    let usuarios = [
+      { id: 1, nombre: "Juan Perez", rol: "Guardia" },
+      { id: 2, nombre: "Maria Lopez", rol: "Administrador" },
+      { id: 3, nombre: "Carlos Diaz", rol: "Guardia" }
+    ];
+
+    let nextId = 4;
+
+    const usuariosTable = document.querySelector("#usuariosTable tbody");
+    const userForm = document.getElementById("userForm");
+
+    // Renderizar tabla
+    function renderTable() {
+      usuariosTable.innerHTML = "";
+      usuarios.forEach(user => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${user.id}</td>
+          <td>${user.nombre}</td>
+          <td>${user.rol}</td>
+          <td>
+            <button class="btn btn-edit" onclick="editarUsuario(${user.id})">Editar</button>
+            <button class="btn btn-delete" onclick="eliminarUsuario(${user.id})">Eliminar</button>
+          </td>
+        `;
+        usuariosTable.appendChild(row);
+      });
+    }
+
+    // Agregar usuario
+    userForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("username").value.trim();
+      const rol = document.getElementById("role").value;
+      if (nombre && rol) {
+        usuarios.push({ id: nextId++, nombre, rol });
+        renderTable();
+        userForm.reset();
+      }
+    });
+
+    // Editar usuario
+    function editarUsuario(id) {
+      const user = usuarios.find(u => u.id === id);
+      const nuevoNombre = prompt("Editar nombre de usuario:", user.nombre);
+      
+      // Desplegar un select en prompt no es posible → usamos confirmaciones simples
+      const nuevoRol = prompt("Editar rol (Administrador o Guardia):", user.rol);
+
+      if (nuevoNombre && (nuevoRol === "Administrador" || nuevoRol === "Guardia")) {
+        user.nombre = nuevoNombre;
+        user.rol = nuevoRol;
+        renderTable();
+      } else {
+        alert("Rol inválido. Debe ser 'Administrador' o 'Guardia'.");
+      }
+    }
+
+    // Eliminar usuario
+    function eliminarUsuario(id) {
+      if (confirm("¿Seguro que deseas eliminar este usuario?")) {
+        usuarios = usuarios.filter(u => u.id !== id);
+        renderTable();
+      }
+    }
+
+    // Render inicial
+    renderTable();
+  </script>
+
+</body>
+</html>

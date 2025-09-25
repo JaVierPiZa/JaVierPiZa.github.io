@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrar Números de Emergencia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 800px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #b71c1c;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #b71c1c;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+      font-size: 14px;
+    }
+
+    .btn-edit {
+      background: #ff9800;
+    }
+
+    .btn-edit:hover {
+      background: #e68900;
+    }
+
+    .btn-delete {
+      background: #c62828;
+    }
+
+    .btn-delete:hover {
+      background: #8e0000;
+    }
+
+    .btn-add {
+      background: #b71c1c;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .btn-add:hover {
+      background: #7f0000;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .back-btn {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background: #757575;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .back-btn:hover {
+      background: #424242;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <h1>Administrar Números de Emergencia</h1>
+
+    <!-- Tabla de números de emergencia -->
+    <table id="emergenciasTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Número</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Los números se insertan aquí dinámicamente -->
+      </tbody>
+    </table>
+
+    <!-- Formulario para agregar número de emergencia -->
+    <form id="emergenciaForm">
+      <input type="text" id="nombre" placeholder="Nombre (Ej: Bomberos)" required>
+      <input type="text" id="numero" placeholder="Número (Ej: 132)" required>
+      <button type="submit" class="btn btn-add">Agregar Número</button>
+    </form>
+
+    <a href="administrador.html" class="back-btn">Volver</a>
+  </div>
+
+  <script>
+    // Datos iniciales de ejemplo
+    let emergencias = [
+      { id: 1, nombre: "Ambulancia", numero: "131" },
+      { id: 2, nombre: "Bomberos", numero: "132" },
+      { id: 3, nombre: "Carabineros", numero: "133" },
+      { id: 4, nombre: "Inspectoria General", numero: "989097541" },
+      { id: 5, nombre: "Directora", numero: "950795646" }
+    ];
+
+    let nextId = emergencias.length + 1;
+
+    const emergenciasTable = document.querySelector("#emergenciasTable tbody");
+    const emergenciaForm = document.getElementById("emergenciaForm");
+
+    // Renderizar tabla
+    function renderTable() {
+      emergenciasTable.innerHTML = "";
+      emergencias.forEach(em => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${em.id}</td>
+          <td>${em.nombre}</td>
+          <td>${em.numero}</td>
+          <td>
+            <button class="btn btn-edit" onclick="editarEmergencia(${em.id})">Editar</button>
+            <button class="btn btn-delete" onclick="eliminarEmergencia(${em.id})">Eliminar</button>
+          </td>
+        `;
+        emergenciasTable.appendChild(row);
+      });
+    }
+
+    // Agregar número
+    emergenciaForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre").value.trim();
+      const numero = document.getElementById("numero").value.trim();
+      if (nombre && numero) {
+        emergencias.push({ id: nextId++, nombre, numero });
+        renderTable();
+        emergenciaForm.reset();
+      }
+    });
+
+    // Editar número
+    function editarEmergencia(id) {
+      const em = emergencias.find(e => e.id === id);
+      const nuevoNombre = prompt("Editar nombre:", em.nombre);
+      const nuevoNumero = prompt("Editar número:", em.numero);
+      if (nuevoNombre && nuevoNumero) {
+        em.nombre = nuevoNombre;
+        em.numero = nuevoNumero;
+        renderTable();
+      }
+    }
+
+    // Eliminar número
+    function eliminarEmergencia(id) {
+      if (confirm("¿Seguro que deseas eliminar este número de emergencia?")) {
+        emergencias = emergencias.filter(e => e.id !== id);
+        renderTable();
+      }
+    }
+
+    // Render inicial
+    renderTable();
+  </script>
+
+</body>
+</html>

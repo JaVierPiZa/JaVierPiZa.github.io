@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .turno-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .info {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        #fecha, #hora {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            width: 100%;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .back-btn, .register-btn {
+            padding: 10px 6px;
+            text-decoration: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            width: 45%; /* Each button will take up 45% of the width */
+            text-align: center;
+            display: inline-block;
+        }
+
+        .back-btn {
+            background: #4CAF50;
+        }
+
+        .register-btn {
+            background: #2196F3;
+        }
+
+        .back-btn:hover {
+            background: #388E3C;
+        }
+
+        .register-btn:hover {
+            background: #1976D2;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 600px) {
+            .turno-container {
+                width: 80%;
+                padding: 20px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .back-btn, .register-btn {
+                width: 100%; /* Stack buttons vertically on small screens */
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="turno-container">
+        <h1>Registro de Turno</h1>
+
+        <!-- Fecha y hora -->
+        <div class="info">
+            <p id="fecha"></p>
+            <p id="hora"></p>
+        </div>
+
+        <!-- Selector de turno -->
+        <label for="turno">Seleccione el turno:</label>
+        <select id="turno">
+            <option value="">Seleccione...</option>
+            <option value="dia">Día</option>
+            <option value="tarde">Tarde</option>
+            <option value="noche">Noche</option>
+        </select>
+
+        <!-- Botones de acción -->
+        <div class="button-container">
+            <a href="guardia.html" class="back-btn">Volver</a>
+            <button class="register-btn" id="submit" onclick="validarTurno()">Registrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar fecha
+        function mostrarFecha() {
+            const hoy = new Date();
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById("fecha").textContent = hoy.toLocaleDateString('es-ES', opciones);
+        }
+
+        // Mostrar hora en vivo
+        function mostrarHora() {
+            const ahora = new Date();
+            document.getElementById("hora").textContent = ahora.toLocaleTimeString('es-ES');
+        }
+
+        // Validar si se seleccionó un turno
+        function validarTurno() {
+            const turno = document.getElementById("turno").value;
+            if (!turno) {
+                alert("Por favor, seleccione un turno.");
+            } else {
+                alert("¡Turno registrado correctamente!");
+            }
+        }
+
+        // Iniciar al cargar
+        mostrarFecha();
+        setInterval(mostrarHora, 1000);
+    </script>
+
+</body>
+</html>

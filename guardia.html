@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardia</title>
+    <style>
+        /* Fondo */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background: linear-gradient(135deg, #283c86, #45a247);
+            color: white;
+        }
+
+        /* Título */
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        /* Contenedor de botones */
+        .button-container {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        /* Botones */
+        .button-container button {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            background: #4CAF50;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .button-container button:hover {
+            background: #388E3C;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Título -->
+    <header>Guardia</header>
+
+    <!-- Botones -->
+    <div class="button-container">
+        <button onclick="location.href='turno.html'">Turno</button>
+        <button onclick="location.href='ronda.html'">Ronda</button>
+        <button onclick="location.href='novedades.html'">Novedades</button>
+        <button onclick="location.href='emergencias.html'">Emergencias</button>
+    </div>
+
+</body>
+</html>
+

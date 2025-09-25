@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <style>
+        /* Fondo */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background: linear-gradient(135deg, #283c86, #45a247);
+            color: white;
+        }
+
+        /* Título */
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        /* Contenedor de botones */
+        .button-container {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        /* Botones */
+        .button-container button {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            background: #4CAF50;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .button-container button:hover {
+            background: #388E3C;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Título -->
+    <header>Administrador</header>
+
+    <!-- Botones -->
+    <div class="button-container">
+        <button onclick="location.href='administrarUsuarios.html'">Administrar usuarios</button>
+        <button onclick="location.href='ubicaciones.html'">Administrar rondas</button>
+        <button onclick="location.href='visualizacionNovedades.html'">Visualizacion de novedades</button>
+        <button onclick="location.href='administraremergencias.html'">Administrar emergencias</button>
+        
+    </div>
+
+</body>
+</html>
+

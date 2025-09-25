@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisión de Ubicaciones</title>
+  <script src="libs/html5-qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .ubicaciones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .ubicacion {
+      margin: 10px 0;
+      padding: 15px;
+      width: 300px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    label {
+      font-size: 18px;
+      margin-left: 8px;
+    }
+    .qr-container {
+      margin: 20px auto;
+      width: 300px;
+      height: 300px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      display: none;
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      background: #388E3C;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Revisión de Ubicaciones</h1>
+
+  <div class="ubicaciones">
+    <div class="ubicacion">
+      <input type="checkbox" id="chk-comedor">
+      <label for="chk-comedor">Comedor</label>
+    </div>
+    <div class="ubicacion">
+      <input type="checkbox" id="chk-enlaces">
+      <label for="chk-enlaces">Enlaces</label>
+    </div>
+    <div class="ubicacion">
+      <input type="checkbox" id="chk-porton">
+      <label for="chk-porton">Portón Internado</label>
+    </div>
+    <div class="ubicacion">
+      <input type="checkbox" id="chk-primer-piso">
+      <label for="chk-primer-piso">Primer Piso</label>
+    </div>
+    <div class="ubicacion">
+      <input type="checkbox" id="chk-segundo-piso">
+      <label for="chk-segundo-piso">Segundo Piso</label>
+    </div>
+    <div class="ubicacion">
+      <input type="checkbox" id="chk-tercer-piso">
+      <label for="chk-tercer-piso">Tercer Piso</label>
+    </div>
+    <div class="ubicacion">
+      <input type="checkbox" id="chk-hall">
+      <label for="chk-hall">Hall</label>
+    </div>
+  </div>
+
+  <button class="btn" onclick="startScanner()">Escanear QR</button>
+  <div id="reader" class="qr-container"></div>
+  <p id="result"></p>
+
+  <div class="button-container">
+    <a href="guardia.html" class="btn">Volver</a>
+    <a href="novedades.html" class="btn">Novedades</a>
+  </div>
+
+  <script>
+    let html5QrCode;
+
+    // Normaliza el texto (quita mayúsculas y tildes)
+    function normalizeText(text) {
+      return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    // Mapeo de códigos QR a checkboxes
+    const ubicaciones = {
+      "comedor": "chk-comedor",
+      "ubic-001": "chk-comedor",
+      "enlaces": "chk-enlaces",
+      "ubic-002": "chk-enlaces",
+      "porton internado": "chk-porton",
+      "ubic-003": "chk-porton",
+      "primer piso": "chk-primer-piso",
+      "ubic-004": "chk-primer-piso",
+      "segundo piso": "chk-segundo-piso",
+      "ubic-005": "chk-segundo-piso",
+      "tercer piso": "chk-tercer-piso",
+      "ubic-006": "chk-tercer-piso",
+      "hall": "chk-hall",
+      "ubic-007": "chk-hall"
+    };
+
+    function startScanner() {
+      const readerDiv = document.getElementById("reader");
+      readerDiv.style.display = "block";
+
+      html5QrCode = new Html5Qrcode("reader");
+
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        (decodedText) => {
+          const key = normalizeText(decodedText.trim());
+          if (ubicaciones[key]) {
+            const chk = document.getElementById(ubicaciones[key]);
+            chk.checked = true;
+            chk.disabled = true;
+            document.getElementById("result").innerText = "✅ Revisión registrada en: " + key;
+            html5QrCode.stop(); // detiene la cámara al primer escaneo correcto
+          } else {
+            document.getElementById("result").innerText = "⚠️ QR no corresponde a ninguna ubicación registrada";
+          }
+        },
+        (errorMessage) => {
+          // se ignoran errores de lectura
+        }
+      ).catch(err => {
+        console.error("Error al iniciar cámara:", err);
+        alert("No se pudo acceder a la cámara. Revisa permisos o usa localhost/https.");
+      });
+    }
+  </script>
+
+</body>
+</html>
